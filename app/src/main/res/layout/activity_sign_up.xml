@@ -45,7 +45,6 @@
                 android:hint="User Name"
                 android:padding="16dp"
                 android:textColor="@color/black"
-                android:textColorHighlight="cardview_dark_background"
                 android:layout_marginTop="16dp" />
             <EditText
                 android:layout_width="match_parent"
@@ -56,7 +55,6 @@
                 android:hint="abc@gmail.com"
                 android:padding="16dp"
                 android:textColor="@color/black"
-                android:textColorHighlight="cardview_dark_background"
                 android:layout_marginTop="16dp" />
             <EditText
                 android:layout_width="match_parent"
@@ -78,7 +76,6 @@
                 android:hint="Confirm Password"
                 android:padding="16dp"
                 android:textColor="@color/black"
-                android:textColorHighlight="cardview_dark_background"
                 android:layout_marginTop="16dp" />
             <Button
                 android:layout_width="match_parent"
@@ -101,7 +98,7 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:text="Already have an account? Login"
-        app:layout_constraintTop_toBottomOf="@id/cardTop"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:textSize="14sp"

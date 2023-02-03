@@ -8,19 +8,19 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.vaxcare.R;
-import com.example.vaxcare.SplashActivity;
 
-public class SignUpActivity extends AppCompatActivity {
-    TextView login;
+public class ForgotPasswordActivity extends AppCompatActivity {
+    TextView back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
-        login=findViewById(R.id.TvLogin);
-        login.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_forgot_password);
+        back=findViewById(R.id.txtbacklogin);
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                Intent intent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });

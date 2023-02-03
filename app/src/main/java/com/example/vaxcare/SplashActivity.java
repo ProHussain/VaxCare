@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 
+import com.example.vaxcare.activities.LoginActivity;
+
 @SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
     private ProgressBar mProgress;
@@ -20,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             public void run() {
                 doWork();
-                //startApp();
+                startApp();
                 finish();
             }
         }).start();
@@ -38,8 +40,8 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-   // private void startApp() {
-     //   Intent intent = new Intent(SplashActivity.this, SplashActivity.class);
-       // startActivity(intent);
-    //}
+    private void startApp() {
+        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
 }
