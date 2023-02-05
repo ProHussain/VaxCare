@@ -1,4 +1,4 @@
-package com.example.vaxcare.activities;
+package com.example.vaxcare.common.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.vaxcare.R;
+import com.example.vaxcare.common.authentication.ui.LoginActivity;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
     TextView back;

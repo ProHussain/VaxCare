@@ -1,4 +1,4 @@
-package com.example.vaxcare;
+package com.example.vaxcare.common.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 
-import com.example.vaxcare.activities.LoginActivity;
+import com.example.vaxcare.R;
+import com.example.vaxcare.common.authentication.ui.LoginActivity;
 
 @SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
