@@ -30,7 +30,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void doWork() {
-        for (int progress = 0; progress < 100; progress += 1) {
+        for (int progress = 0; progress < 100; progress += 10) {
             try {
                 Thread.sleep(30);
                 mProgress.setProgress(progress);
