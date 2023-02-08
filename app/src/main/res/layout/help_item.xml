@@ -5,7 +5,7 @@
     <data>
         <variable
             name="help"
-            type="com.example.vaxcare.user.model.Help" />
+            type="com.example.vaxcare.common.network.model.Help" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

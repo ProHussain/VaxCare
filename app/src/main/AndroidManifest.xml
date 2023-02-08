@@ -36,7 +36,7 @@
             android:exported="false" />
         <activity
             android:name=".common.activities.SplashActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

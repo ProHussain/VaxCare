@@ -1,6 +1,5 @@
 package com.example.vaxcare.common.authentication.viewmodel;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
@@ -11,16 +10,15 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.vaxcare.common.network.MyApi;
 import com.example.vaxcare.common.network.RetrofitClient;
-import com.example.vaxcare.common.network.model.AuthResponse;
+import com.example.vaxcare.common.network.model.ApiResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SignUpViewModel extends ViewModel {
-    public String name, email, password, phone;
+    public String name, email, password, phone,status;
     MutableLiveData<String> validFields;
-    MutableLiveData<AuthResponse> authResponse;
+    MutableLiveData<ApiResponse> authResponse;
 
     public MutableLiveData<String> getValidFields() {
         if (validFields == null) {
@@ -29,7 +27,7 @@ public class SignUpViewModel extends ViewModel {
         return validFields;
     }
 
-    public MutableLiveData<AuthResponse> getAuthResponse() {
+    public MutableLiveData<ApiResponse> getAuthResponse() {
         if (authResponse == null) {
             authResponse = new MutableLiveData<>();
         }
@@ -60,11 +58,12 @@ public class SignUpViewModel extends ViewModel {
     public void onSignUpClick(View view) {
         if (isValid()) {
             validFields.postValue("8");
+            status = "user";
             MyApi loginApi = RetrofitClient.getRetrofitInstance().create(MyApi.class);
-            Call<AuthResponse> responseCall = loginApi.postSignUpStatus(name, email, phone, password);
-            responseCall.enqueue(new Callback<AuthResponse>() {
+            Call<ApiResponse> responseCall = loginApi.postSignUpStatus(name, email, phone, password,status);
+            responseCall.enqueue(new Callback<ApiResponse>() {
                 @Override
-                public void onResponse(@NonNull Call<AuthResponse> call, @NonNull Response<AuthResponse> response) {
+                public void onResponse(@NonNull Call<ApiResponse> call, @NonNull retrofit2.Response<ApiResponse> response) {
                     if (response.isSuccessful()) {
                         authResponse.postValue(response.body());
                     } else {
@@ -73,7 +72,7 @@ public class SignUpViewModel extends ViewModel {
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
                     authResponse.postValue(null);
                 }
             });

@@ -1,4 +1,4 @@
-package com.example.vaxcare.user.model;
+package com.example.vaxcare.common.network.model;
 
 public class Help {
     private String position, title, description;

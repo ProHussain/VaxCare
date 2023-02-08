@@ -6,13 +6,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Patterns;
 import android.widget.Toast;
 
 import com.example.vaxcare.R;
-import com.example.vaxcare.common.network.model.AuthResponse;
-import com.example.vaxcare.common.network.model.User;
+import com.example.vaxcare.common.network.model.ApiResponse;
 import com.example.vaxcare.common.authentication.viewmodel.SignUpViewModel;
 import com.example.vaxcare.databinding.ActivitySignUpBinding;
 
@@ -66,15 +63,15 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        viewModel.getAuthResponse().observe(this, new Observer<AuthResponse>() {
+        viewModel.getAuthResponse().observe(this, new Observer<ApiResponse>() {
             @Override
-            public void onChanged(AuthResponse authResponse) {
+            public void onChanged(ApiResponse apiResponse) {
                 binding.btnSignUp.setEnabled(false);
-                if (authResponse != null) {
-                    if (authResponse.isSuccess()) {
+                if (apiResponse != null) {
+                    if (apiResponse.isSuccess()) {
                         Toast.makeText(SignUpActivity.this, "Success", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(SignUpActivity.this, authResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpActivity.this, apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(SignUpActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();

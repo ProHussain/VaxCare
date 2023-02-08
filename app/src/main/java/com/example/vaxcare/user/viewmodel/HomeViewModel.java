@@ -4,9 +4,8 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.example.vaxcare.user.model.Help;
+import com.example.vaxcare.common.network.model.Help;
 
 import java.util.ArrayList;
 import java.util.List;

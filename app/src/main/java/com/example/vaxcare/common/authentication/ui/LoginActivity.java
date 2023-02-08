@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.vaxcare.R;
 import com.example.vaxcare.common.authentication.viewmodel.LoginViewModel;
-import com.example.vaxcare.common.network.model.AuthResponse;
+import com.example.vaxcare.common.network.model.ApiResponse;
 import com.example.vaxcare.databinding.ActvityLoginBinding;
 import com.example.vaxcare.user.ui.activities.HomeActivity;
 
@@ -52,17 +52,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        loginViewModel.getAuthResponse().observe(this, new Observer<AuthResponse>() {
+        loginViewModel.getAuthResponse().observe(this, new Observer<ApiResponse>() {
             @Override
-            public void onChanged(AuthResponse authResponse) {
+            public void onChanged(ApiResponse apiResponse) {
                 binding.btnLogin.setEnabled(true);
-                if (authResponse != null) {
-                    if (authResponse.isSuccess()) {
+                if (apiResponse != null) {
+                    if (apiResponse.isSuccess()) {
                         Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                         finish();
                     } else {
-                        Toast.makeText(LoginActivity.this, authResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();

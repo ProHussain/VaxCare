@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.vaxcare.common.network.model.Help;
 import com.example.vaxcare.databinding.HelpItemBinding;
-import com.example.vaxcare.user.model.Help;
 
 import java.util.ArrayList;
 import java.util.List;

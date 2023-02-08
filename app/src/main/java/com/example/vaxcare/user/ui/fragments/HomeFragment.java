@@ -6,16 +6,14 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.vaxcare.R;
 import com.example.vaxcare.databinding.FragmentHomeBinding;
 import com.example.vaxcare.user.adapter.HelpAdapter;
-import com.example.vaxcare.user.model.Help;
+import com.example.vaxcare.common.network.model.Help;
 import com.example.vaxcare.user.viewmodel.HomeViewModel;
 
 import java.util.List;
