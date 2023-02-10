@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.vaxcare.user.viewmodel.HomeViewModel" />
+            type="com.example.vaxcare.viewmodel.HomeViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView

@@ -6,6 +6,11 @@
         android:icon="@drawable/ic_home"/>
 
     <item
+        android:id="@+id/appointmentsFragment"
+        android:title="Appointments"
+        android:icon="@drawable/ic_appointments"/>
+
+    <item
         android:id="@+id/profileFragment"
         android:title="Profile"
         android:icon="@drawable/ic_person"/>

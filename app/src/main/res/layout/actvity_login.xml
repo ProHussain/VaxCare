@@ -6,7 +6,7 @@
     <data>
         <variable
             name="loginModel"
-            type="com.example.vaxcare.common.authentication.viewmodel.LoginViewModel" />
+            type="com.example.vaxcare.viewmodel.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
