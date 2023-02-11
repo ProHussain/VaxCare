@@ -1,6 +1,8 @@
 package com.example.vaxcare.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -8,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.vaxcare.databinding.AppointmentItemBinding;
 import com.example.vaxcare.model.Appointment;
+import com.example.vaxcare.ui.activities.AppointmentDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +34,16 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull AppointmentAdapter.ViewHolder holder, int position) {
-        holder.binding.setModel(appointmentList.get(position));
+        Appointment appointment = appointmentList.get(position);
+        holder.binding.setModel(appointment);
+        holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), AppointmentDetailsActivity.class);
+                intent.putExtra("data",appointment);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

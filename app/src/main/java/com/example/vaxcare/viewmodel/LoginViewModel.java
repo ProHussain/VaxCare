@@ -20,7 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class LoginViewModel extends ViewModel {
-    public String email, password;
+    public String email, password,userType;
     MutableLiveData<String> validFields;
     MutableLiveData<ApiResponse> authResponse;
 
@@ -38,10 +38,14 @@ public class LoginViewModel extends ViewModel {
         return authResponse;
     }
 
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
     public void onLoginClick(View view) {
         if (isValid()) {
             MyApi loginApi = RetrofitClient.getRetrofitInstance().create(MyApi.class);
-            Call<ApiResponse> userCall = loginApi.postLoginStatus(email, password);
+            Call<ApiResponse> userCall = loginApi.postLoginStatus(email, password,userType);
             userCall.enqueue(new Callback<ApiResponse>() {
                 @Override
                 public void onResponse(@NonNull Call<ApiResponse> call, @NonNull retrofit2.Response<ApiResponse> response) {

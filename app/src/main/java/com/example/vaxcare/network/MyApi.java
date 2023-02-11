@@ -19,7 +19,8 @@ public interface MyApi {
     @FormUrlEncoded
     @POST("login")
     Call<ApiResponse> postLoginStatus(@Field("email") String email,
-                                      @Field("password") String password);
+                                      @Field("password") String password,
+                                      @Field("status") String status);
 
     @FormUrlEncoded
     @POST("signup")
@@ -45,4 +46,7 @@ public interface MyApi {
 
     @GET("get_appointments")
     Call<AppointmentResponse> getAppointments(@Query("email") String email);
+
+    @PUT("update_appointment")
+    Call<ApiResponse> updateAppointmentStatus(@Body Appointment appointment);
 }

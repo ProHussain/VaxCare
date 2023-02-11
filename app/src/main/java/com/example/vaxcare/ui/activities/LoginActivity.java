@@ -2,6 +2,7 @@ package com.example.vaxcare.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,12 +12,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.vaxcare.R;
 import com.example.vaxcare.databinding.ActvityLoginBinding;
+import com.example.vaxcare.utils.VaxPreference;
 import com.example.vaxcare.viewmodel.LoginViewModel;
 import com.example.vaxcare.model.ApiResponse;
 
 public class LoginActivity extends AppCompatActivity {
     LoginViewModel loginViewModel;
     ActvityLoginBinding binding;
+    VaxPreference vaxPreference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +27,11 @@ public class LoginActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(LoginActivity.this,R.layout.actvity_login);
         binding.setLifecycleOwner(this);
         binding.setLoginModel(loginViewModel);
+        vaxPreference = new VaxPreference(getApplicationContext());
+        loginViewModel.setUserType(vaxPreference.getUserType());
+        if (vaxPreference.getUserType().equalsIgnoreCase("admin")) {
+            binding.TvSignup.setVisibility(View.GONE);
+        }
         loginViewModel.getValidFields().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -57,6 +65,8 @@ public class LoginActivity extends AppCompatActivity {
                 binding.btnLogin.setEnabled(true);
                 if (apiResponse != null) {
                     if (apiResponse.isSuccess()) {
+                        vaxPreference.setLoginStatus(true);
+                        vaxPreference.setEmail(loginViewModel.email);
                         Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                         finish();

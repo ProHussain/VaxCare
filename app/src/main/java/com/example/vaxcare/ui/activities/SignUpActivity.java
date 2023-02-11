@@ -5,10 +5,12 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.vaxcare.R;
+import com.example.vaxcare.utils.VaxPreference;
 import com.example.vaxcare.viewmodel.SignUpViewModel;
 import com.example.vaxcare.model.ApiResponse;
 import com.example.vaxcare.databinding.ActivitySignUpBinding;
@@ -23,7 +25,7 @@ public class SignUpActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_sign_up);
         binding.setLifecycleOwner(this);
         binding.setViewModel(viewModel);
-
+        VaxPreference vaxPreference = new VaxPreference(getApplicationContext());
         viewModel.getValidFields().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -69,7 +71,11 @@ public class SignUpActivity extends AppCompatActivity {
                 binding.btnSignUp.setEnabled(false);
                 if (apiResponse != null) {
                     if (apiResponse.isSuccess()) {
+                        vaxPreference.setLoginStatus(true);
+                        vaxPreference.setEmail(viewModel.email);
                         Toast.makeText(SignUpActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(SignUpActivity.this, HomeActivity.class));
+                        finishAffinity();
                     } else {
                         Toast.makeText(SignUpActivity.this, apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
