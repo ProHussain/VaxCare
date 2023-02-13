@@ -17,6 +17,7 @@ import com.example.vaxcare.model.Appointment;
 import com.example.vaxcare.ui.dialogs.AddAppointmentDialog;
 import com.example.vaxcare.adapter.AppointmentAdapter;
 import com.example.vaxcare.listeners.OnDialogActionListener;
+import com.example.vaxcare.utils.VaxPreference;
 import com.example.vaxcare.viewmodel.AppointmentsViewModel;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class AppointmentsFragment extends Fragment implements OnDialogActionList
     FragmentAppointmentsBinding binding;
     AppointmentsViewModel model;
     AddAppointmentDialog dialog;
+    VaxPreference preferences;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,6 +36,10 @@ public class AppointmentsFragment extends Fragment implements OnDialogActionList
         binding.setViewModel(model);
         binding.setLifecycleOwner(getViewLifecycleOwner());
         binding.appointmentsRV.setAdapter(new AppointmentAdapter());
+        preferences = new VaxPreference(requireContext());
+        if (preferences.getUserType().equals("team")) {
+            binding.fabAddNew.setVisibility(View.GONE);
+        }
         model.getAppointmentsLiveData().observe(getViewLifecycleOwner(), new Observer<List<Appointment>>() {
             @Override
             public void onChanged(List<Appointment> list) {

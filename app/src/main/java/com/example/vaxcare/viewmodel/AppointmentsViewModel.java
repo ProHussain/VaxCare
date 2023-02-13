@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -11,6 +12,7 @@ import com.example.vaxcare.model.Appointment;
 import com.example.vaxcare.model.AppointmentResponse;
 import com.example.vaxcare.network.MyApi;
 import com.example.vaxcare.network.RetrofitClient;
+import com.example.vaxcare.utils.VaxPreference;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,12 +23,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AppointmentsViewModel extends ViewModel {
-    MutableLiveData<List<Appointment>> appointmentsLiveData;
+public class AppointmentsViewModel extends AndroidViewModel {
+    MutableLiveData<List<Appointment>> appointmentsLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isDialogVisible = new MutableLiveData<>();
+    VaxPreference preference;
 
-    public AppointmentsViewModel() {
-        appointmentsLiveData = new MutableLiveData<>();
+    public AppointmentsViewModel(@NonNull android.app.Application application) {
+        super(application);
+        preference = new VaxPreference(application.getApplicationContext());
         fetchData();
     }
     public MutableLiveData<List<Appointment>> getAppointmentsLiveData() {
@@ -54,7 +58,7 @@ public class AppointmentsViewModel extends ViewModel {
     private void fetchData() {
         List<Appointment> appointmentList = new ArrayList<>();
         MyApi myApi = RetrofitClient.getRetrofitInstance().create(MyApi.class);
-        myApi.getAppointments("ali@gmail.com").enqueue(new Callback<AppointmentResponse>() {
+        myApi.getAppointments(preference.getEmail()).enqueue(new Callback<AppointmentResponse>() {
             @Override
             public void onResponse(@NonNull Call<AppointmentResponse> call, @NonNull Response<AppointmentResponse> response) {
                 if (response.isSuccessful()) {

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -15,13 +16,20 @@ import com.example.vaxcare.network.MyApi;
 import com.example.vaxcare.network.RetrofitClient;
 import com.example.vaxcare.model.Profile;
 import com.example.vaxcare.ui.activities.EditProfileActivity;
+import com.example.vaxcare.utils.VaxPreference;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProfileViewModel extends ViewModel {
+public class ProfileViewModel extends AndroidViewModel {
     MutableLiveData<Profile> profileLiveData;
+    VaxPreference preference;
+
+    public ProfileViewModel(android.app.Application application) {
+        super(application);
+        preference = new VaxPreference(application.getApplicationContext());
+    }
     public MutableLiveData<Profile> getProfileLiveData(){
         if (profileLiveData == null)
             profileLiveData = new MutableLiveData<>();
@@ -30,7 +38,7 @@ public class ProfileViewModel extends ViewModel {
 
     public void fetchData() {
         MyApi api = RetrofitClient.getRetrofitInstance().create(MyApi.class);
-        api.getUserProfile("ali@gmail.com").enqueue(new Callback<Profile>() {
+        api.getUserProfile(preference.getEmail()).enqueue(new Callback<Profile>() {
             @Override
             public void onResponse(Call<Profile> call, Response<Profile> response) {
                 if (response.isSuccessful()) {

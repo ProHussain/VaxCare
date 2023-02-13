@@ -5,6 +5,7 @@ import com.example.vaxcare.model.Appointment;
 import com.example.vaxcare.model.AppointmentResponse;
 import com.example.vaxcare.model.Profile;
 import com.example.vaxcare.model.User;
+import com.example.vaxcare.model.AdminResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -46,6 +47,9 @@ public interface MyApi {
 
     @GET("get_appointments")
     Call<AppointmentResponse> getAppointments(@Query("email") String email);
+
+    @GET("get_vaccines")
+    Call<AdminResponse> getVaccines();
 
     @PUT("update_appointment")
     Call<ApiResponse> updateAppointmentStatus(@Body Appointment appointment);

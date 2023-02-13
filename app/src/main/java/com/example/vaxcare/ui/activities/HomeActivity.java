@@ -20,6 +20,7 @@ import com.google.android.material.navigation.NavigationBarView;
 public class HomeActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     VaxPreference preference;
+    int selectedItemId = R.id.homeFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,14 +34,17 @@ public class HomeActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.homeFragment:
+                        selectedItemId = R.id.homeFragment;
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.nav_fragment,new HomeFragment()).commit();
                         break;
                     case R.id.appointmentsFragment:
+                        selectedItemId = R.id.appointmentsFragment;
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.nav_fragment,new AppointmentsFragment()).commit();
                         break;
                     case R.id.profileFragment:
+                        selectedItemId = R.id.profileFragment;
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.nav_fragment,new ProfileFragment()).commit();
                         break;
@@ -70,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    bottomNavigationView.setSelectedItemId(R.id.homeFragment);
+                    bottomNavigationView.setSelectedItemId(selectedItemId);
                 }
             });
         builder.show();

@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -11,6 +12,7 @@ import com.example.vaxcare.model.ApiResponse;
 import com.example.vaxcare.model.Appointment;
 import com.example.vaxcare.network.MyApi;
 import com.example.vaxcare.network.RetrofitClient;
+import com.example.vaxcare.utils.VaxPreference;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -23,15 +25,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AppointmentDialogViewModel extends ViewModel {
+public class AppointmentDialogViewModel extends AndroidViewModel {
     MutableLiveData<List<String>> vaccineList = new MutableLiveData<>();
     MutableLiveData<ApiResponse> apiResponse = new MutableLiveData<>();
     private String vaccineName;
+    VaxPreference preference;
 
-    public AppointmentDialogViewModel() {
+    public AppointmentDialogViewModel(@NonNull android.app.Application application) {
+        super(application);
+        preference = new VaxPreference(application.getApplicationContext());
         fetchData();
     }
-
     public MutableLiveData<List<String>> getVaccineList() {
         return vaccineList;
     }
@@ -52,7 +56,7 @@ public class AppointmentDialogViewModel extends ViewModel {
         String date = dateFormat.format(calendar.getTime());
         SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
         String time = timeFormat.format(calendar.getTime());
-        Appointment appointment = new Appointment(vaccineName, date,time,"ali@gmail.com","","Pending");
+        Appointment appointment = new Appointment(vaccineName, date,time,preference.getEmail(),"","Pending");
         MyApi myApi = RetrofitClient.getRetrofitInstance().create(MyApi.class);
         myApi.postAppointmentStatus(appointment).enqueue(new Callback<ApiResponse>() {
             @Override

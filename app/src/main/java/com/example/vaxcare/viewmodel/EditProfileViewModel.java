@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -23,6 +24,7 @@ import com.example.vaxcare.network.RetrofitClient;
 import com.example.vaxcare.model.ApiResponse;
 import com.example.vaxcare.model.Profile;
 import com.example.vaxcare.model.User;
+import com.example.vaxcare.utils.VaxPreference;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -33,16 +35,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EditProfileViewModel extends ViewModel {
+public class EditProfileViewModel extends AndroidViewModel {
 
-    MutableLiveData<User> userLiveData;
-    MutableLiveData<ApiResponse> apiResponse;
+    MutableLiveData<User> userLiveData = new MutableLiveData<>();
+    MutableLiveData<ApiResponse> apiResponse = new MutableLiveData<>();
     MutableLiveData<Boolean> onBack = new MutableLiveData<>();
     private final MutableLiveData<Bitmap> selectedImage = new MutableLiveData<>();
+    VaxPreference preference;
 
-    public EditProfileViewModel() {
-        userLiveData = new MutableLiveData<>();
-        apiResponse = new MutableLiveData<>();
+    public EditProfileViewModel(@NonNull android.app.Application application) {
+        super(application);
+        preference = new VaxPreference(application.getApplicationContext());
         fetchData();
     }
 
@@ -72,7 +75,7 @@ public class EditProfileViewModel extends ViewModel {
 
     public void fetchData() {
         MyApi api = RetrofitClient.getRetrofitInstance().create(MyApi.class);
-        api.getUserProfile("ali@gmail.com").enqueue(new Callback<Profile>() {
+        api.getUserProfile(preference.getEmail()).enqueue(new Callback<Profile>() {
             @Override
             public void onResponse(@NonNull Call<Profile> call, @NonNull Response<Profile> response) {
                 if (response.isSuccessful()) {
