@@ -4,6 +4,7 @@ import com.example.vaxcare.model.ApiResponse;
 import com.example.vaxcare.model.Appointment;
 import com.example.vaxcare.model.AppointmentResponse;
 import com.example.vaxcare.model.Profile;
+import com.example.vaxcare.model.SingleAppointmentResponse;
 import com.example.vaxcare.model.User;
 import com.example.vaxcare.model.AdminResponse;
 
@@ -51,6 +52,34 @@ public interface MyApi {
     @GET("get_vaccines")
     Call<AdminResponse> getVaccines();
 
+    @GET("get_all_team")
+    Call<AdminResponse> getTeam();
+
+    @GET("get_all_users")
+    Call<AdminResponse> getUsers();
+
+    @GET("get_all_requests")
+    Call<AdminResponse> getRequests();
+
+    @GET("get_all_completed")
+    Call<AdminResponse> getCompleted();
+    @FormUrlEncoded
+    @POST("delete_vaccine")
+    Call<ApiResponse> deleteVaccine( @Field("id") String id);
+
+    @FormUrlEncoded
+    @POST("add_vaccine")
+    Call<ApiResponse> addVaccine( @Field("name") String name);
+
+    @FormUrlEncoded
+    @POST("add_team")
+    Call<ApiResponse> addTeam( @Field("name") String name,
+                               @Field("email") String email,
+                               @Field("password") String password);
+
     @PUT("update_appointment")
     Call<ApiResponse> updateAppointmentStatus(@Body Appointment appointment);
+
+    @GET("get_single_appointment")
+    Call<SingleAppointmentResponse> getSingleAppointment(@Query("id") String id);
 }

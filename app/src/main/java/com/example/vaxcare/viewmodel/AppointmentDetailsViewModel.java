@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.vaxcare.model.ApiResponse;
 import com.example.vaxcare.model.Appointment;
 import com.example.vaxcare.model.Profile;
+import com.example.vaxcare.model.SingleAppointmentResponse;
 import com.example.vaxcare.model.User;
 import com.example.vaxcare.network.MyApi;
 import com.example.vaxcare.network.RetrofitClient;
@@ -24,11 +25,35 @@ public class AppointmentDetailsViewModel extends ViewModel {
     MutableLiveData<Appointment> appointmentMutableLiveData = new MutableLiveData<>();
     MutableLiveData<User> userMutableLiveData = new MutableLiveData<>();
     MutableLiveData<User> teamMutableLiveData = new MutableLiveData<>();
+    String appointmentId;
 
-    public void setAppointmentMutableLiveData(Appointment appointment) {
-        appointmentMutableLiveData.setValue(appointment);
-        fetchUserData();
-        fetchTeamData();
+    public void setAppointmentId(String appointmentId) {
+        this.appointmentId = appointmentId;
+        fetchAppointmentData();
+    }
+
+    private void fetchAppointmentData() {
+        MyApi api = RetrofitClient.getRetrofitInstance().create(MyApi.class);
+        api.getSingleAppointment(appointmentId).enqueue(new Callback<SingleAppointmentResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<SingleAppointmentResponse> call, @NonNull Response<SingleAppointmentResponse> response) {
+                if (response.isSuccessful()) {
+                    assert response.body()!= null;
+                    if (response.body().isSuccess()) {
+                        appointmentMutableLiveData.setValue(response.body().getAppointment());
+                        fetchUserData();
+                        fetchTeamData();
+                    }
+                } else {
+                    Log.e("Appointment Response", String.valueOf(response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SingleAppointmentResponse> call, @NonNull Throwable t) {
+                Log.e("Appointment Response", String.valueOf(t.getMessage()));
+            }
+        });
     }
 
     private void fetchUserData() {
@@ -108,5 +133,9 @@ public class AppointmentDetailsViewModel extends ViewModel {
                 Log.e("Response Success", t.getMessage());
             }
         });
+    }
+
+    public void onAssignClick(View view) {
+
     }
 }

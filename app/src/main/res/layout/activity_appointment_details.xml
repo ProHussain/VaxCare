@@ -222,6 +222,7 @@
                 android:background="@android:color/darker_gray" />
 
             <Button
+                android:visibility="gone"
                 android:id="@+id/btnUpdateStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -229,6 +230,16 @@
                 android:background="@drawable/btn_solid_bg"
                 android:text="Mark Completed"
                 android:onClick="@{(v) -> appointment.onUpdateStatusClick(v)}"/>
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/btnAssign"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp"
+                android:background="@drawable/btn_solid_bg"
+                android:text="Assign to Team"
+                android:onClick="@{(v) -> appointment.onAssignClick(v)}"/>
         </LinearLayout>
 
     </ScrollView>

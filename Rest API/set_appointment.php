@@ -44,8 +44,8 @@
 
 
         function __construct($data) {
-            $this->appointment_id = $data['appointment_id'];
-            $this->vaccine_name = $data['vaccine_name'];
+            $this->appointment_id = $data['id'];
+            $this->vaccine_name = $data['name'];
             $this->appointment_date = $data['appointment_date'];
             $this->appointment_time = $data['appointment_time'];
             $this->appointment_user = $data['appointment_user'];

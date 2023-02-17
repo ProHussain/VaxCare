@@ -75,7 +75,7 @@ public class AddAppointmentDialog extends DialogFragment {
             @Override
             public void onChanged(ApiResponse apiResponse) {
                 Toast.makeText(getContext(), apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                onDialogActionListener.onRequestClick();
+                onDialogActionListener.onClick();
             }
         });
     }

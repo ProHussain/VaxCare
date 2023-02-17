@@ -40,7 +40,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), AppointmentDetailsActivity.class);
-                intent.putExtra("data",appointment);
+                intent.putExtra("data",appointment.getId());
                 v.getContext().startActivity(intent);
             }
         });

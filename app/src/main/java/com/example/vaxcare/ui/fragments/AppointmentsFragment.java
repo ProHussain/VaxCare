@@ -84,7 +84,7 @@ public class AppointmentsFragment extends Fragment implements OnDialogActionList
     }
 
     @Override
-    public void onRequestClick() {
+    public void onClick() {
         model.hideDialog();
     }
 }

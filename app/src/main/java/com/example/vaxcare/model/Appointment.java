@@ -6,10 +6,10 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class Appointment implements Serializable {
-    @SerializedName("appointment_id")
+    @SerializedName("id")
     @Expose
     private String id;
-    @SerializedName("vaccine_name")
+    @SerializedName("name")
     @Expose
     private String name;
     @SerializedName("appointment_date")
