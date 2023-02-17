@@ -38,7 +38,7 @@ public class ProfileViewModel extends AndroidViewModel {
 
     public void fetchData() {
         MyApi api = RetrofitClient.getRetrofitInstance().create(MyApi.class);
-        api.getUserProfile(preference.getEmail()).enqueue(new Callback<Profile>() {
+        api.getUserProfile(preference.getUserId()).enqueue(new Callback<Profile>() {
             @Override
             public void onResponse(Call<Profile> call, Response<Profile> response) {
                 if (response.isSuccessful()) {

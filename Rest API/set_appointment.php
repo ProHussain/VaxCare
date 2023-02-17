@@ -5,7 +5,7 @@
         $data = json_decode(file_get_contents("php://input"), true);
         $appointment = new Appointment($data);
 
-        $query = "INSERT INTO appointments (vaccine_name, appointment_date, appointment_time, appointment_user, appointment_team, appointment_status) 
+        $query = "INSERT INTO appointments (name, appointment_date, appointment_time, appointment_user, appointment_team, appointment_status) 
             VALUES ('$appointment->vaccine_name', '$appointment->appointment_date', '$appointment->appointment_time', '$appointment->appointment_user',
             '$appointment->appointment_team','$appointment->appointment_status')";
 
@@ -33,7 +33,7 @@
     mysqli_close($con);
     
     class Appointment {
-        public $appointment_id;
+        public $id;
         public $vaccine_name;
         public $appointment_date;
         public $appointment_time;

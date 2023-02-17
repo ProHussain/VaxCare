@@ -11,15 +11,19 @@ import android.view.View;
 
 import com.example.vaxcare.R;
 import com.example.vaxcare.databinding.ActivityAppointmentDetailsBinding;
+import com.example.vaxcare.listeners.OnDialogActionListener;
 import com.example.vaxcare.model.Appointment;
+import com.example.vaxcare.ui.dialogs.AddAppointmentDialog;
+import com.example.vaxcare.ui.dialogs.AssignTeamDialog;
 import com.example.vaxcare.utils.VaxPreference;
 import com.example.vaxcare.viewmodel.AppointmentDetailsViewModel;
 import com.example.vaxcare.viewmodel.EditProfileViewModel;
 
-public class AppointmentDetailsActivity extends AppCompatActivity {
+public class AppointmentDetailsActivity extends AppCompatActivity implements OnDialogActionListener {
     ActivityAppointmentDetailsBinding binding;
     AppointmentDetailsViewModel model;
     VaxPreference vaxPreference;
+    AssignTeamDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +33,10 @@ public class AppointmentDetailsActivity extends AppCompatActivity {
         binding.setAppointment(model);
         boolean admin = getIntent().getBooleanExtra("admin",false);
         String id = getIntent().getStringExtra("data");
+        vaxPreference = new VaxPreference(getApplicationContext());
+        if (vaxPreference.getUserType().equalsIgnoreCase("user")) {
+            binding.btnUpdateStatus.setVisibility(View.GONE);
+        }
 
         model.setAppointmentId(id);
 /*        Appointment appointment = (Appointment) getIntent().getSerializableExtra("data");
@@ -48,7 +56,7 @@ public class AppointmentDetailsActivity extends AppCompatActivity {
                     } else {
                         binding.btnAssign.setVisibility(View.VISIBLE);
                     }
-                } else{
+                } else if (!vaxPreference.getUserType().equalsIgnoreCase("user")) {
                     if (appointment.getStatus().equalsIgnoreCase("completed")) {
                         binding.btnUpdateStatus.setVisibility(View.GONE);
                     } else {
@@ -58,10 +66,30 @@ public class AppointmentDetailsActivity extends AppCompatActivity {
             }
         });
 
-        vaxPreference = new VaxPreference(getApplicationContext());
-        if (vaxPreference.getUserType().equalsIgnoreCase("user")) {
-            binding.btnUpdateStatus.setVisibility(View.GONE);
-        }
+        model.getIsDialogVisible().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean)
+                    ShowAssignDialog();
+                else
+                    HideDialog();
+            }
+        });
 
+    }
+
+    private void HideDialog() {
+        model.hideDialog();
+    }
+
+    private void ShowAssignDialog() {
+        dialog = new AssignTeamDialog(this,model.getAppointmentMutableLiveData().getValue());
+        dialog.show(getSupportFragmentManager(), "AddAppointmentDialog");
+    }
+
+    @Override
+    public void onClick() {
+        model.fetchAppointmentData();
+        dialog.dismiss();
     }
 }

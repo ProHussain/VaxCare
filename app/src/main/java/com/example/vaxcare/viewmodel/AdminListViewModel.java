@@ -23,6 +23,7 @@ public class AdminListViewModel extends AndroidViewModel {
     MutableLiveData<List<AdminList>> adminList = new MutableLiveData<>();
     MutableLiveData<Boolean> addData = new MutableLiveData<>();
     private String listName;
+    public String title;
 
     public AdminListViewModel(@NonNull Application application) {
         super(application);
@@ -30,7 +31,8 @@ public class AdminListViewModel extends AndroidViewModel {
 
     public void setListName(String listName) {
         this.listName = listName;
-        fetchData();
+        title = "Here is all\nVaxCare " + listName;
+//        fetchData();
     }
 
     public MutableLiveData<List<AdminList>> getAdminList() {

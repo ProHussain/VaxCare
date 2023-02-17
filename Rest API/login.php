@@ -8,10 +8,12 @@
     $result = mysqli_query($con, $query);
 
     if (mysqli_num_rows($result) > 0) {
-        $response = array(
-            'message' => 'Login successful',
-            'success' => true,
-        );
+        $row = mysqli_fetch_assoc($result);
+            $response = array(
+                'message' => 'Login successful',
+                'success' => true,
+                'id' => $row['id'],
+            );
     } else {
         $response = array(
             'message' => 'email or password is incorrect',

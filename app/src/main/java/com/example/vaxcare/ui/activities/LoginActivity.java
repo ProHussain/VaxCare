@@ -2,6 +2,7 @@ package com.example.vaxcare.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -29,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         binding.setLoginModel(loginViewModel);
         vaxPreference = new VaxPreference(getApplicationContext());
         loginViewModel.setUserType(vaxPreference.getUserType());
-        if (vaxPreference.getUserType().equalsIgnoreCase("admin")) {
+        if (vaxPreference.getUserType().equalsIgnoreCase("admin") || vaxPreference.getUserType().equalsIgnoreCase("team")) {
             binding.TvSignup.setVisibility(View.GONE);
         }
         loginViewModel.getValidFields().observe(this, new Observer<String>() {
@@ -65,10 +66,15 @@ public class LoginActivity extends AppCompatActivity {
                 binding.btnLogin.setEnabled(true);
                 if (apiResponse != null) {
                     if (apiResponse.isSuccess()) {
+                        Log.e("LoginActivity", "onChanged: " + apiResponse.getId());
                         vaxPreference.setLoginStatus(true);
                         vaxPreference.setEmail(loginViewModel.email);
+                        vaxPreference.setUserId(apiResponse.getId());
                         Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        if (vaxPreference.getUserType().equalsIgnoreCase("admin"))
+                            startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+                        else
+                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                         finish();
                     } else {
                         Toast.makeText(LoginActivity.this, apiResponse.getMessage(), Toast.LENGTH_SHORT).show();

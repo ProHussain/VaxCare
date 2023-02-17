@@ -50,7 +50,7 @@ public class DashboardActivity extends AppCompatActivity {
                 VaxPreference preference = new VaxPreference(DashboardActivity.this);
                 preference.setLoginStatus(false);
                 Toast.makeText(DashboardActivity.this, "Logout Successful", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
+                Intent intent = new Intent(DashboardActivity.this, SelectUserActivity.class);
                 startActivity(intent);
                 finishAffinity();
             }

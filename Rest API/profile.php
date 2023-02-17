@@ -1,9 +1,9 @@
 <?php
   require "conn.php";
 
-  $email = $_GET['email'];
+  $id = $_GET['id'];
   
-  $query = "SELECT * FROM users WHERE email = '$email'";
+  $query = "SELECT * FROM users WHERE id = '$id'";
   $result = mysqli_query($con, $query);
 
   if (mysqli_num_rows($result) > 0) {

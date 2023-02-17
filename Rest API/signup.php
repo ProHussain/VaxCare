@@ -7,9 +7,11 @@
 
     $query = "INSERT INTO users (name, email, phone, password) VALUES ('$name', '$email', '$phone', '$password')";
     if (mysqli_query($con,$query)) {
+        $user_id = mysqli_insert_id($con);
         $response = array(
-            'message' => 'Sign up successful',
+            'message' => 'Registration successful',
             'success' => true,
+            'id' => $user_id,
         );
     } else {
         $response = array(

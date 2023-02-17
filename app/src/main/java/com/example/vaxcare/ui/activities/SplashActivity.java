@@ -15,7 +15,7 @@ import com.example.vaxcare.utils.VaxPreference;
 @SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
     private static final String TAG = "SplashActivity";
-    final int SPLASH_DURATION = 3500;// 3.5 seconds
+    final int SPLASH_DURATION = 500;// 3.5 seconds
     final int PROGRESS_INTERVAL = 100; // 100 milliseconds
     private int mProgress = 0;
     private Handler mHandler;
@@ -39,7 +39,10 @@ public class SplashActivity extends AppCompatActivity {
                 progressBar.setProgress(mProgress);
                 if (mProgress >= SPLASH_DURATION) {
                     if (preference.getLoginStatus())
-                        startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+                        if (preference.getUserType().equalsIgnoreCase("admin"))
+                            startActivity(new Intent(SplashActivity.this, DashboardActivity.class));
+                        else
+                            startActivity(new Intent(SplashActivity.this, HomeActivity.class));
                     else
                         startActivity(new Intent(SplashActivity.this, SelectUserActivity.class));
                     finish();

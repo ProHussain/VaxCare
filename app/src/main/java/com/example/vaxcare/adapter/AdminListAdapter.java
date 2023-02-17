@@ -3,6 +3,7 @@ package com.example.vaxcare.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -46,6 +47,7 @@ public class AdminListAdapter extends RecyclerView.Adapter<AdminListAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Log.e("TAG", "onBindViewHolder: " + adminList.get(position).getId()+ " " + adminList.get(position).getName());
         holder.binding.setModel(adminList.get(position));
         holder.binding.getRoot().setOnClickListener(v -> {
             if (listType.equals("vaccine")){

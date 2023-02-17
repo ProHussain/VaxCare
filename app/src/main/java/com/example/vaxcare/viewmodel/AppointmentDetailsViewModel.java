@@ -27,12 +27,14 @@ public class AppointmentDetailsViewModel extends ViewModel {
     MutableLiveData<User> teamMutableLiveData = new MutableLiveData<>();
     String appointmentId;
 
+    MutableLiveData<Boolean> isDialogVisible = new MutableLiveData<>();
+
     public void setAppointmentId(String appointmentId) {
         this.appointmentId = appointmentId;
         fetchAppointmentData();
     }
 
-    private void fetchAppointmentData() {
+    public void fetchAppointmentData() {
         MyApi api = RetrofitClient.getRetrofitInstance().create(MyApi.class);
         api.getSingleAppointment(appointmentId).enqueue(new Callback<SingleAppointmentResponse>() {
             @Override
@@ -136,6 +138,14 @@ public class AppointmentDetailsViewModel extends ViewModel {
     }
 
     public void onAssignClick(View view) {
+        isDialogVisible.setValue(true);
+    }
 
+    public void hideDialog() {
+        isDialogVisible.setValue(false);
+    }
+
+    public MutableLiveData<Boolean> getIsDialogVisible() {
+        return isDialogVisible;
     }
 }

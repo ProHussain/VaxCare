@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.vaxcare.R;
@@ -73,6 +74,8 @@ public class SignUpActivity extends AppCompatActivity {
                     if (apiResponse.isSuccess()) {
                         vaxPreference.setLoginStatus(true);
                         vaxPreference.setEmail(viewModel.email);
+                        vaxPreference.setUserId(apiResponse.getId());
+                        Log.e("TAG", "onChanged: " + apiResponse.getId());
                         Toast.makeText(SignUpActivity.this, "Success", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SignUpActivity.this, HomeActivity.class));
                         finishAffinity();

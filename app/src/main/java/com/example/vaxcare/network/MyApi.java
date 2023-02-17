@@ -41,7 +41,7 @@ public interface MyApi {
                                    @Field("image") String image,
                                    @Field("email") String email);
     @GET("profile")
-    Call<Profile> getUserProfile(@Query("email") String email);
+    Call<Profile> getUserProfile(@Query("id") String id);
 
     @PUT("set_appointment")
     Call<ApiResponse> postAppointmentStatus(@Body Appointment appointment);

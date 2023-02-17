@@ -33,7 +33,6 @@ public class AdminListActivity extends AppCompatActivity implements OnDialogActi
         if (listType.equals("users") || listType.equals("request") || listType.equals("complete")) {
             binding.floatingActionButton.setVisibility(android.view.View.GONE);
         }
-
         viewModel.setListName(listType);
         binding.setLifecycleOwner(this);
         binding.setViewModel(viewModel);
@@ -77,6 +76,12 @@ public class AdminListActivity extends AppCompatActivity implements OnDialogActi
         } else if (listType.equals("worker")) {
             addTeamDialog.dismiss();
         }
+        viewModel.fetchData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         viewModel.fetchData();
     }
 }

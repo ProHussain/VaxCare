@@ -58,7 +58,7 @@ public class AppointmentsViewModel extends AndroidViewModel {
     private void fetchData() {
         List<Appointment> appointmentList = new ArrayList<>();
         MyApi myApi = RetrofitClient.getRetrofitInstance().create(MyApi.class);
-        myApi.getAppointments(preference.getEmail()).enqueue(new Callback<AppointmentResponse>() {
+        myApi.getAppointments(preference.getUserId()).enqueue(new Callback<AppointmentResponse>() {
             @Override
             public void onResponse(@NonNull Call<AppointmentResponse> call, @NonNull Response<AppointmentResponse> response) {
                 if (response.isSuccessful()) {
