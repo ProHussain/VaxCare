@@ -26,7 +26,10 @@ import com.example.vaxcare.viewmodel.LoginViewModel;
  * Login Page Complete, Let's move on SignUp Page
  * Let's we user and Team app after changes
  * Everything is working fine, Let's push the code
- * But first need to update the appoointment automatically
+ * But first need to update the appointment automatically
+ * Hey Again thanks for watching, if you like this video then please like and subscribe to our channel
+ * I hope you will like this series and understand hwo to deal with old projects
+ * See you in next Series, Bye Bye and Happy Coding :)
  */
 
 public class LoginActivity extends AppCompatActivity {
