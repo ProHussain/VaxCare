@@ -10,6 +10,10 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
+
+    @SerializedName("id")
+    @Expose
+    private String id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -48,7 +52,8 @@ public class User {
         this.phone = phoneNumber;
     }
 
-    public User(String name, String email, String phone, String password, String dob, String address, String image, String status) {
+    public User(String id,String name, String email, String phone, String password, String dob, String address, String image, String status) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -57,6 +62,14 @@ public class User {
         this.address = address;
         this.image = image;
         this.status = status;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

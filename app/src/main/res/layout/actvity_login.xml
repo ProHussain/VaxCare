@@ -12,104 +12,162 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/primaryDarkColor">
+        bind:context=".LoginActivity">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardTop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@color/white"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="3dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="vertical"
-                android:padding="24dp">
-
-                <TextView
-                    android:id="@+id/TvLoginText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Login"
-                    android:textAlignment="center"
-                    android:textColor="@color/primaryDarkColor"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/et_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:hint="user@mail.com"
-                    android:background="@drawable/et_stroke_bg"
-                    android:text="@={loginModel.email}"
-                    android:textColor="@color/black"
-                    android:inputType="textEmailAddress" />
-
-                <EditText
-                    android:id="@+id/et_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/et_stroke_bg"
-                    android:hint="******"
-                    android:text="@={loginModel.password}"
-                    android:inputType="textPassword"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/tvForgot_Password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Forgot Password?"
-                    android:visibility="gone"
-                    android:onClick="@{(v) -> loginModel.onForgotPasswordClick(v)}"
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/primaryDarkColor"
-                    android:textSize="16sp" />
-
-                <Button
-                    android:id="@+id/btn_login"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/btn_solid_bg"
-                    android:padding="8dp"
-                    android:text="Login"
-                    android:onClick="@{(v) -> loginModel.onLoginClick(v)}"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:id="@+id/TvSignup"
+        <ImageView
+            android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:padding="8dp"
-            android:text="Not yet registered? Sign Up Now"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:onClick="@{(v) -> loginModel.onSignUpClick(v)}"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/vaxcare_blob" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/login"
+            android:textColor="@color/black"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_email_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={loginModel.email}"
+                android:hint="@string/email" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_password_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_email_container"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                android:text="@={loginModel.password}"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:paddingHorizontal="16dp"
+            android:text="@string/login"
+            android:onClick="@{() -> loginModel.onLoginClick()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+        <TextView
+            android:id="@+id/tv_or"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/or"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_or"
+            app:layout_constraintEnd_toStartOf="@+id/tv_or"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_or" />
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_or"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_or"
+            app:layout_constraintTop_toTopOf="@+id/tv_or" />
+
+        <TextView
+            android:id="@+id/tv_hint_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="@string/if_you_don_t_have_an_account_please_click_here"
+            app:layout_constraintBottom_toTopOf="@+id/tv_signup"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <TextView
+            android:id="@+id/tv_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/signup"
+            android:onClick="@{(v) -> loginModel.onSignUpClick(v)}"
+            android:textColor="@color/primaryColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/et_password_container"
+            app:layout_constraintStart_toStartOf="@+id/et_password_container"
+            app:layout_constraintTop_toBottomOf="@+id/et_password_container">
+
+            <RadioButton
+                android:id="@+id/rb_user"
+                android:checked="true"
+                android:onCheckedChanged="@{(buttonView, isChecked) -> loginModel.onTypeChanged(isChecked)}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/are_you_a_user"/>
+
+            <RadioButton
+                android:id="@+id/rb_team"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/are_you_a_team_member"/>
+
+        </RadioGroup>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

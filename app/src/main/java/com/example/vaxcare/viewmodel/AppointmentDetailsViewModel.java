@@ -7,10 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.vaxcare.model.ApiResponse;
+import com.example.vaxcare.model.Responses.ApiResponse;
 import com.example.vaxcare.model.Appointment;
 import com.example.vaxcare.model.Profile;
-import com.example.vaxcare.model.SingleAppointmentResponse;
+import com.example.vaxcare.model.Responses.SingleAppointmentResponse;
 import com.example.vaxcare.model.User;
 import com.example.vaxcare.network.MyApi;
 import com.example.vaxcare.network.RetrofitClient;

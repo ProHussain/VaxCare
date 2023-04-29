@@ -1,7 +1,7 @@
 <?php
   require "conn.php";
   
-  $query = "SELECT id, name FROM users WHERE status = 'team'";
+  $query = "SELECT * FROM users WHERE status = 'team'";
   $result = mysqli_query($con, $query);
 
   if (mysqli_num_rows($result) > 0) {

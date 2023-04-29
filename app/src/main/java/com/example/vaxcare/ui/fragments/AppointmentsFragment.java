@@ -22,6 +22,26 @@ import com.example.vaxcare.viewmodel.AppointmentsViewModel;
 
 import java.util.List;
 
+/**
+ * in AppointmentsFragment we are showing the list of appointments
+ * But what if list is empty? We need to show a message to user that list is empty
+ * So we will add a image view and show it when list is empty, Let's add image view
+ * The image is already added in layout file, we just need to show it when list is empty
+ * Works pretty well
+ * Now Let's add some Appointment in list, In adding Appointment we will use a dialog
+ * Dummy data is already added in AppointmentAdapter, we need to replace it with real data
+ * Let's load vaccine list from server
+ * Works pretty well, Now we also show a message to user if vaccine appointment is already requested
+ * It's prevent user from requesting same vaccine appointment again and again and also prevent entry of duplicate data
+ * Duplicate check is done on basis of vaccine name and and user id and status
+ * Now we need to auto update the list when new appointment is added
+ * Works well and i think it's enough for this fragment
+ * In our next video we will work over profile fragment
+ * Thank you for watching, if you like this video then please like and subscribe to our channel
+ * See you in next video
+ * Bye Bye and Happy Coding :)
+ */
+
 public class AppointmentsFragment extends Fragment implements OnDialogActionListener {
 
     FragmentAppointmentsBinding binding;
@@ -40,22 +60,14 @@ public class AppointmentsFragment extends Fragment implements OnDialogActionList
         if (preferences.getUserType().equals("team")) {
             binding.fabAddNew.setVisibility(View.GONE);
         }
-        model.getAppointmentsLiveData().observe(getViewLifecycleOwner(), new Observer<List<Appointment>>() {
-            @Override
-            public void onChanged(List<Appointment> list) {
-                UpdateList(list);
-            }
-        });
+        model.getAppointmentsLiveData().observe(getViewLifecycleOwner(), this::UpdateList);
 
-        model.getIsDialogVisible().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                Log.e("Click Event", String.valueOf(aBoolean));
-                if (aBoolean)
-                    ShowAppointmentDialog();
-                else
-                    HideDialog();
-            }
+        model.getIsDialogVisible().observe(getViewLifecycleOwner(), aBoolean -> {
+            Log.e("Click Event", String.valueOf(aBoolean));
+            if (Boolean.TRUE.equals(aBoolean))
+                ShowAppointmentDialog();
+            else
+                HideDialog();
         });
         return binding.getRoot();
     }
@@ -70,6 +82,7 @@ public class AppointmentsFragment extends Fragment implements OnDialogActionList
     }
 
     private void UpdateList(List<Appointment> list) {
+        Log.e("List Size", String.valueOf(list.size()));
         if (list.isEmpty()) {
             binding.imgNotFound.setVisibility(View.VISIBLE);
             binding.appointmentsRV.setVisibility(View.GONE);
@@ -81,6 +94,12 @@ public class AppointmentsFragment extends Fragment implements OnDialogActionList
             adapter.setAppointmentList(list);
             adapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        model.fetchData();
     }
 
     @Override

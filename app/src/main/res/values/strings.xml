@@ -2,4 +2,22 @@
     <string name="app_name">VaxCare</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="or">or</string>
+    <string name="if_you_don_t_have_an_account_please_click_here">If you don\'t have an account, please click here</string>
+    <string name="signup">SignUp</string>
+    <string name="are_you_a_team_member">Are you a Team Member?</string>
+    <string name="are_you_a_user">Are you a user?</string>
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="stay_protected_nwith_our_vaccine_app">Stay Protected\nwith our Vaccine App</string>
+    <string name="share_app_with_friends_and_family">Share App with Friends and Family</string>
+    <string name="rate_us_on_play_store">Rate us on Play Store</string>
+    <string name="view_more_apps_from_us">View More Apps from us</string>
+    <string name="visit_our_privacy_policy">Visit our privacy policy</string>
+    <string name="developer_email">hussain@hashmac.com</string>
+    <string name="developer_name">HashMac</string>
+    <string name="developer_id">pro_hussain</string>
 </resources>

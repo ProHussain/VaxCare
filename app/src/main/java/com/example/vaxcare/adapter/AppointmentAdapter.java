@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.vaxcare.databinding.AppointmentItemBinding;
+import com.example.vaxcare.databinding.ItemAppointmentBinding;
 import com.example.vaxcare.model.Appointment;
 import com.example.vaxcare.ui.activities.AppointmentDetailsActivity;
 
@@ -22,13 +22,14 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     }
 
     public void setAppointmentList(List<Appointment> appointmentList) {
+        this.appointmentList.clear();
         this.appointmentList = appointmentList;
     }
 
     @NonNull
     @Override
     public AppointmentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        AppointmentItemBinding binding = AppointmentItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ItemAppointmentBinding binding = ItemAppointmentBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new AppointmentAdapter.ViewHolder(binding);
     }
 
@@ -52,8 +53,8 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        AppointmentItemBinding binding;
-        public ViewHolder(@NonNull AppointmentItemBinding binding) {
+        ItemAppointmentBinding binding;
+        public ViewHolder(@NonNull ItemAppointmentBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

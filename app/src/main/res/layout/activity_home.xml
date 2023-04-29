@@ -22,8 +22,7 @@
         android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:background="@color/primaryDarkColor"
+        android:background="@color/primaryColor"
         app:itemIconTint="@color/bottom_vav"
         app:itemTextColor="@color/bottom_vav"
         app:layout_constraintBottom_toBottomOf="parent"

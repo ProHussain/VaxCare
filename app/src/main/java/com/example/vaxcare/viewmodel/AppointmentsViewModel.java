@@ -6,10 +6,9 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.vaxcare.model.Appointment;
-import com.example.vaxcare.model.AppointmentResponse;
+import com.example.vaxcare.model.Responses.AppointmentResponse;
 import com.example.vaxcare.network.MyApi;
 import com.example.vaxcare.network.RetrofitClient;
 import com.example.vaxcare.utils.VaxPreference;
@@ -31,7 +30,6 @@ public class AppointmentsViewModel extends AndroidViewModel {
     public AppointmentsViewModel(@NonNull android.app.Application application) {
         super(application);
         preference = new VaxPreference(application.getApplicationContext());
-        fetchData();
     }
     public MutableLiveData<List<Appointment>> getAppointmentsLiveData() {
         if (appointmentsLiveData == null)
@@ -52,10 +50,11 @@ public class AppointmentsViewModel extends AndroidViewModel {
     }
 
     public void hideDialog() {
+        fetchData();
         isDialogVisible.setValue(false);
     }
 
-    private void fetchData() {
+    public void fetchData() {
         List<Appointment> appointmentList = new ArrayList<>();
         MyApi myApi = RetrofitClient.getRetrofitInstance().create(MyApi.class);
         myApi.getAppointments(preference.getUserId()).enqueue(new Callback<AppointmentResponse>() {
@@ -66,12 +65,11 @@ public class AppointmentsViewModel extends AndroidViewModel {
                     assert appointmentResponse != null;
                     if (appointmentResponse.isSuccess()) {
                         appointmentList.addAll(appointmentResponse.getAppointmentList());
-                        appointmentsLiveData.setValue(appointmentList);
                     }
-                    Log.e("Response Success", Objects.requireNonNull(response.body()).getMessage());
+                    appointmentsLiveData.postValue(appointmentList);
                 } else {
                     try {
-                        Log.e("Response Success", Objects.requireNonNull(response.errorBody()).string());
+                        Log.e("Response Failure", Objects.requireNonNull(response.errorBody()).string());
                     } catch (IOException e) {
                         Log.e("Response Exception", e.getMessage());
                         throw new RuntimeException(e);

@@ -1,12 +1,15 @@
 package com.example.vaxcare.network;
 
-import com.example.vaxcare.model.ApiResponse;
+import com.example.vaxcare.model.Responses.AllUserResponse;
+import com.example.vaxcare.model.Responses.ApiResponse;
 import com.example.vaxcare.model.Appointment;
-import com.example.vaxcare.model.AppointmentResponse;
+import com.example.vaxcare.model.Responses.AppointmentResponse;
+import com.example.vaxcare.model.Responses.HelpResponse;
 import com.example.vaxcare.model.Profile;
-import com.example.vaxcare.model.SingleAppointmentResponse;
+import com.example.vaxcare.model.Responses.SingleAppointmentResponse;
 import com.example.vaxcare.model.User;
-import com.example.vaxcare.model.AdminResponse;
+import com.example.vaxcare.model.Responses.AdminResponse;
+import com.example.vaxcare.model.Responses.VaccineResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -50,13 +53,13 @@ public interface MyApi {
     Call<AppointmentResponse> getAppointments(@Query("email") String email);
 
     @GET("get_vaccines")
-    Call<AdminResponse> getVaccines();
+    Call<VaccineResponse> getVaccines();
 
     @GET("get_all_team")
-    Call<AdminResponse> getTeam();
+    Call<AllUserResponse> getTeam();
 
     @GET("get_all_users")
-    Call<AdminResponse> getUsers();
+    Call<AllUserResponse> getUsers();
 
     @GET("get_all_requests")
     Call<AdminResponse> getRequests();
@@ -67,9 +70,13 @@ public interface MyApi {
     @POST("delete_vaccine")
     Call<ApiResponse> deleteVaccine( @Field("id") String id);
 
+    // We need to update Api too
+
     @FormUrlEncoded
     @POST("add_vaccine")
-    Call<ApiResponse> addVaccine( @Field("name") String name);
+    Call<ApiResponse> addVaccine(@Field("name") String name,
+                                 @Field("image") String vaccineImageUrl,
+                                 @Field("description") String vaccineDescription);
 
     @FormUrlEncoded
     @POST("add_team")
@@ -82,4 +89,7 @@ public interface MyApi {
 
     @GET("get_single_appointment")
     Call<SingleAppointmentResponse> getSingleAppointment(@Query("id") String id);
+
+    @GET("get_helps")
+    Call<HelpResponse> getHelps();
 }

@@ -1,4 +1,4 @@
-package com.example.vaxcare.model;
+package com.example.vaxcare.model.Responses;
 
 public class ApiResponse {
     private String message;

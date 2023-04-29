@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.vaxcare.databinding.AdminListItemBinding;
 import com.example.vaxcare.model.AdminList;
-import com.example.vaxcare.model.ApiResponse;
+import com.example.vaxcare.model.Responses.ApiResponse;
+import com.example.vaxcare.model.User;
+import com.example.vaxcare.model.Vaccine;
 import com.example.vaxcare.network.MyApi;
 import com.example.vaxcare.network.RetrofitClient;
 import com.example.vaxcare.ui.activities.AppointmentDetailsActivity;
@@ -27,7 +29,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AdminListAdapter extends RecyclerView.Adapter<AdminListAdapter.ViewHolder> {
-    List<AdminList> adminList = new ArrayList<AdminList>();
+    List<AdminList> adminList = new ArrayList<>();
+    List<Vaccine> vaccineList = new ArrayList<>();
+    List<User> userList = new ArrayList<>();
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+        for (User user : userList) {
+            adminList.add(new AdminList(user.getId(),user.getName()));
+        }
+    }
     private String listType;
 
     public AdminListAdapter(String listType) {
@@ -36,6 +46,13 @@ public class AdminListAdapter extends RecyclerView.Adapter<AdminListAdapter.View
 
     public void setAdminList(List<AdminList> adminList) {
         this.adminList = adminList;
+    }
+
+    public void setVaccineList(List<Vaccine> vaccineList) {
+        this.vaccineList = vaccineList;
+        for (Vaccine vaccine : vaccineList) {
+            adminList.add(new AdminList(String.valueOf(vaccine.getId()),vaccine.getName()));
+        }
     }
 
     @NonNull
@@ -52,13 +69,24 @@ public class AdminListAdapter extends RecyclerView.Adapter<AdminListAdapter.View
         holder.binding.getRoot().setOnClickListener(v -> {
             if (listType.equals("vaccine")){
                 DeleteVacDialog(v.getContext(), adminList.get(position).getId());
-            } if (listType.equals("request") || listType.equals("complete")){
+            } else if (listType.equals("request") || listType.equals("complete")){
                 Intent intent = new Intent(v.getContext(), AppointmentDetailsActivity.class);
                 intent.putExtra("admin",true);
                 intent.putExtra("data", adminList.get(position).getId());
                 v.getContext().startActivity(intent);
+            } else if (listType.equals("users") || listType.equals("worker")){
+                showUserInfoDialog(v.getContext(), position);
             }
         });
+    }
+
+    // Here is dialog for showing user info
+    private void showUserInfoDialog(Context context, int id) {
+        User user = userList.get(id);
+        new AlertDialog.Builder(context)
+                .setTitle("Account Info")
+                .setMessage("Name: "+ user.getName() + "\n" + "Email: "+ user.getEmail() + "\n" + "Phone: "+ user.getPhone() + "\n" + "Address: "+ user.getAddress())
+                .show();
     }
 
     private void DeleteVacDialog(Context context, String id) {

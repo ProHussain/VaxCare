@@ -6,10 +6,10 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.example.vaxcare.model.ApiResponse;
+import com.example.vaxcare.model.Responses.ApiResponse;
 import com.example.vaxcare.model.Appointment;
+import com.example.vaxcare.model.Responses.VaccineResponse;
 import com.example.vaxcare.network.MyApi;
 import com.example.vaxcare.network.RetrofitClient;
 import com.example.vaxcare.utils.VaxPreference;
@@ -56,17 +56,17 @@ public class AppointmentDialogViewModel extends AndroidViewModel {
         String date = dateFormat.format(calendar.getTime());
         SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
         String time = timeFormat.format(calendar.getTime());
-        Appointment appointment = new Appointment(vaccineName, date,time,preference.getEmail(),"","Pending");
+        Appointment appointment = new Appointment(vaccineName, date,time,preference.getUserId(),"","Pending");
         MyApi myApi = RetrofitClient.getRetrofitInstance().create(MyApi.class);
         myApi.postAppointmentStatus(appointment).enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
                 if (response.isSuccessful()) {
-                    apiResponse.postValue(response.body());;
+                    apiResponse.postValue(response.body());
                     Log.e("Response Success", Objects.requireNonNull(response.body()).getMessage());
                 } else {
                     try {
-                        Log.e("Response Success", Objects.requireNonNull(response.errorBody()).string());
+                        Log.e("Response Failure", Objects.requireNonNull(response.errorBody()).string());
                         apiResponse.setValue(new ApiResponse(response.errorBody().string(), false));
                     } catch (IOException e) {
                         Log.e("Response Exception", e.getMessage());
@@ -85,12 +85,48 @@ public class AppointmentDialogViewModel extends AndroidViewModel {
         });
     }
 
+    // We handle this glitch in our Php code
+    // I'm not a master of Php let's Ask GPT to solve our problem
+    // Chat GPT is great, let's test new code, but first i will explain you what it did
+    // I have added a new field in Appointment table called status
+    // Now when we request for appointment, we will send status as Pending
+    // When we request for appointment, we will send status as Pending
+    // we will check sender id, status and and vaccine name in Appointment table
+    // if there is no record, we will insert new record otherwise we will show error message
+    // Chat GPT code not work, there is some problem in code
+    // In fact chat gpt is great source to handle our problems but it's not working sometimes
+    // As a developer we need to handle these problems, we need to debug chat gpt code and use for our purpose
+    // let's debug chat gpt code or we just get idea from chat gpt code and write our own code
+
     public void fetchData() {
-        List<String> list = new ArrayList<>();
-        list.add("Vax 1");
-        list.add("Vax 2");
-        list.add("Vax 3");
-        list.add("Vax 4");
-        vaccineList.setValue(list);
+        // here we fetch vaccine list from server
+        MyApi api = RetrofitClient.getRetrofitInstance().create(MyApi.class);
+        api.getVaccines().enqueue(new Callback<VaccineResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<VaccineResponse> call, @NonNull Response<VaccineResponse> response) {
+                if (response.isSuccessful()) {
+                    List<String> list = new ArrayList<>();
+                    for (int i = 0; i < Objects.requireNonNull(response.body()).getVaccineList().size(); i++) {
+                        list.add(response.body().getVaccineList().get(i).getName());
+                    }
+                    vaccineList.postValue(list);
+                } else {
+                    try {
+                        Log.e("Response Success", Objects.requireNonNull(response.errorBody()).string());
+                    } catch (IOException e) {
+                        Log.e("Response Exception", e.getMessage());
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<VaccineResponse> call, @NonNull Throwable t) {
+                Log.e("Error on Failure", t.getMessage());
+            }
+        });
+
+        // Let's test our app now
+        // Appointments are working fine but we need to show in list too
     }
 }

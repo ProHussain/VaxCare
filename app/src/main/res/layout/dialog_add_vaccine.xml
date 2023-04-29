@@ -27,7 +27,7 @@
                 android:fontFamily="casual"
                 android:text="Add Vaccine"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="24sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -50,6 +50,39 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
+            <EditText
+                android:id="@+id/vaccineImageURL"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:hint="Vaccine URL"
+                android:text="@={viewModel.vaccineImageUrl}"
+                android:background="@drawable/et_stroke_bg"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vaccineName" />
+
+            <EditText
+                android:id="@+id/vaccineDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:hint="Vaccine Description"
+                android:text="@={viewModel.vaccineDescription}"
+                android:background="@drawable/et_stroke_bg"
+                android:gravity="center_horizontal|top"
+                android:minLines="3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vaccineImageURL" />
+
             <Button
                 android:id="@+id/button"
                 android:layout_width="0dp"
@@ -65,7 +98,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/vaccineName" />
+                app:layout_constraintTop_toBottomOf="@+id/vaccineDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

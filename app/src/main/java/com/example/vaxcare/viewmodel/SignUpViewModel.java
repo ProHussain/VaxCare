@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.vaxcare.network.MyApi;
 import com.example.vaxcare.network.RetrofitClient;
-import com.example.vaxcare.model.ApiResponse;
+import com.example.vaxcare.model.Responses.ApiResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,7 +55,7 @@ public class SignUpViewModel extends ViewModel {
         return false;
     }
 
-    public void onSignUpClick(View view) {
+    public void onSignUpClick() {
         if (isValid()) {
             validFields.postValue("8");
             status = "user";

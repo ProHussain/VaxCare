@@ -9,6 +9,7 @@
         android:maxSdkVersion="29" />
 
     <application
+        android:name=".VaxCare"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -19,14 +20,14 @@
         android:theme="@style/Theme.VaxCare"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.SettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.AdminListActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activities.DashboardActivity"
             android:exported="true" />
-        <activity
-            android:name=".ui.activities.SelectUserActivity"
-            android:exported="false" />
         <activity
             android:name=".ui.activities.AppointmentDetailsActivity"
             android:exported="false" />
@@ -35,9 +36,6 @@
             android:exported="false" />
         <activity
             android:name=".ui.activities.HomeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activities.ForgotPasswordActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activities.SignUpActivity"

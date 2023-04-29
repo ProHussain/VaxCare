@@ -16,6 +16,11 @@ import com.example.vaxcare.databinding.FragmentProfileBinding;
 import com.example.vaxcare.model.Profile;
 import com.example.vaxcare.viewmodel.ProfileViewModel;
 
+/**
+ * The Size of top header is too big
+ * Let's reduce it
+ */
+
 public class ProfileFragment extends Fragment {
     FragmentProfileBinding binding;
     ProfileViewModel model;

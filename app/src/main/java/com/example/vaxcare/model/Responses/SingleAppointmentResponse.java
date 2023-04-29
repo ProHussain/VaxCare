@@ -1,11 +1,10 @@
-package com.example.vaxcare.model;
+package com.example.vaxcare.model.Responses;
 
+import com.example.vaxcare.model.Appointment;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-public class AppointmentResponse {
+public class SingleAppointmentResponse {
     @SerializedName("message")
     @Expose
     private String message;
@@ -14,15 +13,15 @@ public class AppointmentResponse {
     private boolean success;
     @SerializedName("data")
     @Expose
-    private List<Appointment> appointmentList;
+    private Appointment appointment;
 
-    public AppointmentResponse() {
+    public SingleAppointmentResponse() {
     }
 
-    public AppointmentResponse(String message, boolean success, List<Appointment> appointmentList) {
+    public SingleAppointmentResponse(String message, boolean success, Appointment appointment) {
         this.message = message;
         this.success = success;
-        this.appointmentList = appointmentList;
+        this.appointment = appointment;
     }
 
     public String getMessage() {
@@ -41,11 +40,11 @@ public class AppointmentResponse {
         this.success = success;
     }
 
-    public List<Appointment> getAppointmentList() {
-        return appointmentList;
+    public Appointment getAppointment() {
+        return appointment;
     }
 
-    public void setAppointmentList(List<Appointment> appointmentList) {
-        this.appointmentList = appointmentList;
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
     }
 }

@@ -36,13 +36,32 @@ public class AdminListActivity extends AppCompatActivity implements OnDialogActi
         viewModel.setListName(listType);
         binding.setLifecycleOwner(this);
         binding.setViewModel(viewModel);
-        binding.adminListRV.setAdapter(new AdminListAdapter(listType));
-
         viewModel.getAdminList().observe(this, adminLists -> {
             if (adminLists != null) {
-                AdminListAdapter adapter = (AdminListAdapter) binding.adminListRV.getAdapter();
-                assert adapter != null;
+                AdminListAdapter adapter = new AdminListAdapter(listType);
+                binding.adminListRV.setAdapter(adapter);
                 adapter.setAdminList(adminLists);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        viewModel.getVaccineList().observe(this, vaccineLists -> {
+            if (vaccineLists != null) {
+                AdminListAdapter adapter = new AdminListAdapter(listType);
+                binding.adminListRV.setAdapter(adapter);
+                adapter.setVaccineList(vaccineLists);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        // Same Logic like vaccineList applied in workerList or UserList
+        // Show a dialog to show information about the worker and user
+
+        viewModel.getUserList().observe(this, userList -> {
+            if (userList != null) {
+                AdminListAdapter adapter = new AdminListAdapter(listType);
+                binding.adminListRV.setAdapter(adapter);
+                adapter.setUserList(userList);
                 adapter.notifyDataSetChanged();
             }
         });

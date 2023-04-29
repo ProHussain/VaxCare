@@ -16,12 +16,11 @@ import androidx.databinding.BindingAdapter;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.bumptech.glide.Glide;
 import com.example.vaxcare.network.MyApi;
 import com.example.vaxcare.network.RetrofitClient;
-import com.example.vaxcare.model.ApiResponse;
+import com.example.vaxcare.model.Responses.ApiResponse;
 import com.example.vaxcare.model.Profile;
 import com.example.vaxcare.model.User;
 import com.example.vaxcare.utils.VaxPreference;

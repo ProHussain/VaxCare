@@ -17,16 +17,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.vaxcare.R;
 import com.example.vaxcare.databinding.DialogAddAppointmentBinding;
 import com.example.vaxcare.listeners.OnDialogActionListener;
-import com.example.vaxcare.model.ApiResponse;
 import com.example.vaxcare.viewmodel.AppointmentDialogViewModel;
 
-import java.util.List;
 import java.util.Objects;
 
 public class AddAppointmentDialog extends DialogFragment {
@@ -49,34 +46,29 @@ public class AddAppointmentDialog extends DialogFragment {
         AppointmentDialogViewModel viewModel = new ViewModelProvider(this).get(AppointmentDialogViewModel.class);
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(this);
-        viewModel.getVaccineList().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
-            @Override
-            public void onChanged(List<String> strings) {
-                Log.e("Check Error", String.valueOf(strings.size()));
-                if (!strings.isEmpty()){
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, strings);
-                    binding.vaccineListACTV.setAdapter(adapter);
-                    binding.vaccineListACTV.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            viewModel.setVaccineName(strings.get(position));
-                        }
+        viewModel.getVaccineList().observe(getViewLifecycleOwner(), strings -> {
+            Log.e("Check Error", String.valueOf(strings.size()));
+            if (!strings.isEmpty()){
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, strings);
+                binding.vaccineListACTV.setAdapter(adapter);
+                binding.vaccineListACTV.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view1, int position, long id) {
+                        viewModel.setVaccineName(strings.get(position));
+                    }
 
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
 
-                        }
-                    });
-                }
+                    }
+                });
             }
         });
 
-        viewModel.getApiResponse().observe(getViewLifecycleOwner(), new Observer<ApiResponse>() {
-            @Override
-            public void onChanged(ApiResponse apiResponse) {
-                Toast.makeText(getContext(), apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                onDialogActionListener.onClick();
-            }
+        viewModel.getApiResponse().observe(getViewLifecycleOwner(), apiResponse -> {
+
+            Toast.makeText(getContext(), apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
+            onDialogActionListener.onClick();
         });
     }
 

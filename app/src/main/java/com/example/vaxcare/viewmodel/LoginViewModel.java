@@ -1,5 +1,6 @@
 package com.example.vaxcare.viewmodel;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
@@ -7,22 +8,36 @@ import android.util.Patterns;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.example.vaxcare.ui.activities.ForgotPasswordActivity;
+import com.example.vaxcare.VaxCare;
 import com.example.vaxcare.ui.activities.SignUpActivity;
 import com.example.vaxcare.network.RetrofitClient;
 import com.example.vaxcare.network.MyApi;
-import com.example.vaxcare.model.ApiResponse;
+import com.example.vaxcare.model.Responses.ApiResponse;
+import com.example.vaxcare.utils.VaxPreference;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 
-public class LoginViewModel extends ViewModel {
+public class LoginViewModel extends AndroidViewModel {
     public String email, password,userType;
     MutableLiveData<String> validFields;
     MutableLiveData<ApiResponse> authResponse;
+
+    VaxPreference preference;
+
+    public LoginViewModel(@NonNull Application application) {
+        super(application);
+        preference = new VaxPreference(application);
+        if (VaxCare.getAppType().equals("admin")) {
+            userType = "admin";
+        } else {
+            userType = "user";
+        }
+    }
+
 
     public MutableLiveData<String> getValidFields() {
         if (validFields == null) {
@@ -38,12 +53,9 @@ public class LoginViewModel extends ViewModel {
         return authResponse;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
-
-    public void onLoginClick(View view) {
+    public void onLoginClick() {
         if (isValid()) {
+            preference.setUserType(userType);
             MyApi loginApi = RetrofitClient.getRetrofitInstance().create(MyApi.class);
             Call<ApiResponse> userCall = loginApi.postLoginStatus(email, password,userType);
             userCall.enqueue(new Callback<ApiResponse>() {
@@ -64,21 +76,24 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    public void onForgotPasswordClick(View view) {
-        Context context = view.getContext();
-        context.startActivity(new Intent(context, ForgotPasswordActivity.class));
-    }
-
     public void onSignUpClick(View view) {
         Context context = view.getContext();
         context.startActivity(new Intent(context, SignUpActivity.class));
+    }
+
+    public void onTypeChanged(boolean isChecked) {
+        if (isChecked) {
+            userType = "user";
+        } else {
+            userType = "team";
+        }
     }
 
     private boolean isValid() {
         if (TextUtils.isEmpty(email)) {
             validFields.postValue("1");
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            validFields.setValue("2");
+            validFields.postValue("2");
         } else if (TextUtils.isEmpty(password)) {
             validFields.postValue("3");
         } else if (password.length() < 6) {

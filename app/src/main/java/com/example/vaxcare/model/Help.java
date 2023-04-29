@@ -1,20 +1,26 @@
 package com.example.vaxcare.model;
 
 public class Help {
-    private String position, title, description;
+    private int id;
+    private String title;
+    private String description;
 
-    public Help(String position, String title, String description) {
-        this.position = position;
+    public Help(int id, String title, String description) {
+        this.id = id;
         this.title = title;
         this.description = description;
     }
 
-    public String getPosition() {
-        return position;
+    public int getId() {
+        return id;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public String getIdString() {
+        return Integer.toString(id);
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {

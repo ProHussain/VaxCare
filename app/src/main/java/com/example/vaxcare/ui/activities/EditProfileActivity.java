@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.example.vaxcare.R;
 import com.example.vaxcare.databinding.ActivityEditProfileBinding;
-import com.example.vaxcare.model.ApiResponse;
+import com.example.vaxcare.model.Responses.ApiResponse;
 import com.example.vaxcare.viewmodel.EditProfileViewModel;
 
 import java.io.IOException;

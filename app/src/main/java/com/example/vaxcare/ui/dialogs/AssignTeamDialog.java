@@ -22,7 +22,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.vaxcare.R;
 import com.example.vaxcare.databinding.DialogAssignTeamBinding;
 import com.example.vaxcare.listeners.OnDialogActionListener;
-import com.example.vaxcare.model.ApiResponse;
+import com.example.vaxcare.model.Responses.ApiResponse;
 import com.example.vaxcare.model.Appointment;
 import com.example.vaxcare.viewmodel.AssignTeamViewModel;
 

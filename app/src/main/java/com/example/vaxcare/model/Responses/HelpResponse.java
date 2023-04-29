@@ -1,11 +1,12 @@
-package com.example.vaxcare.model;
+package com.example.vaxcare.model.Responses;
 
+import com.example.vaxcare.model.Help;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class AdminResponse {
+public class HelpResponse {
     @SerializedName("message")
     @Expose
     private String message;
@@ -14,15 +15,15 @@ public class AdminResponse {
     private boolean success;
     @SerializedName("data")
     @Expose
-    private List<AdminList> adminLists;
+    private List<Help> helpList;
 
-    public AdminResponse() {
+    public HelpResponse() {
     }
 
-    public AdminResponse(String message, boolean success, List<AdminList> adminLists) {
+    public HelpResponse(String message, boolean success, List<Help> helpList) {
         this.message = message;
         this.success = success;
-        this.adminLists = adminLists;
+        this.helpList = helpList;
     }
 
     public String getMessage() {
@@ -41,11 +42,11 @@ public class AdminResponse {
         this.success = success;
     }
 
-    public List<AdminList> getAdminLists() {
-        return adminLists;
+    public List<Help> getHelpList() {
+        return helpList;
     }
 
-    public void setAdminLists(List<AdminList> adminLists) {
-        this.adminLists = adminLists;
+    public void setHelpList(List<Help> helpList) {
+        this.helpList = helpList;
     }
 }

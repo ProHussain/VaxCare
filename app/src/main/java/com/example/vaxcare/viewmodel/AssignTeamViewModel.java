@@ -9,9 +9,11 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.vaxcare.model.AdminList;
-import com.example.vaxcare.model.AdminResponse;
-import com.example.vaxcare.model.ApiResponse;
+import com.example.vaxcare.model.Responses.AdminResponse;
+import com.example.vaxcare.model.Responses.AllUserResponse;
+import com.example.vaxcare.model.Responses.ApiResponse;
 import com.example.vaxcare.model.Appointment;
+import com.example.vaxcare.model.User;
 import com.example.vaxcare.network.MyApi;
 import com.example.vaxcare.network.RetrofitClient;
 
@@ -25,11 +27,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Hello there!
+ * I made few changes in APi and ViewModel
+ * Let me show you
+ * I secure API too, let me show you and load more data
+ * For security, I add a status
+ */
+
 public class AssignTeamViewModel extends AndroidViewModel {
 
     public Appointment appointment;
     MutableLiveData<ApiResponse> apiResponse = new MutableLiveData<>();
-    MutableLiveData<List<AdminList>> teamList = new MutableLiveData<>();
+    MutableLiveData<List<User>> teamList = new MutableLiveData<>();
 
     public AssignTeamViewModel(@NonNull Application application) {
         super(application);
@@ -38,13 +48,13 @@ public class AssignTeamViewModel extends AndroidViewModel {
 
     private void fetchData() {
         MyApi api = RetrofitClient.getRetrofitInstance().create(MyApi.class);
-        api.getTeam().enqueue(new Callback<AdminResponse>() {
+        api.getTeam().enqueue(new Callback<AllUserResponse>() {
             @Override
-            public void onResponse(@NonNull Call<AdminResponse> call, @NonNull Response<AdminResponse> response) {
+            public void onResponse(@NonNull Call<AllUserResponse> call, @NonNull Response<AllUserResponse> response) {
                 if (response.isSuccessful()) {
                     assert response.body() != null;
                     if (response.body().isSuccess()) {
-                        teamList.setValue(response.body().getAdminLists());
+                        teamList.setValue(response.body().getUserList());
                     } else {
                         Log.e("Team Response", "Failed");
                     }
@@ -52,7 +62,7 @@ public class AssignTeamViewModel extends AndroidViewModel {
             }
 
             @Override
-            public void onFailure(@NonNull Call<AdminResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<AllUserResponse> call, @NonNull Throwable t) {
                 Log.e("Team Response", String.valueOf(t.getMessage()));
             }
         });
@@ -66,7 +76,7 @@ public class AssignTeamViewModel extends AndroidViewModel {
         return apiResponse;
     }
 
-    public MutableLiveData<List<AdminList>> getTeamList() {
+    public MutableLiveData<List<User>> getTeamList() {
         return teamList;
     }
 
