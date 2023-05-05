@@ -98,9 +98,29 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
+
+        loginViewModel.getSwitchStatus().observe(this, aBoolean -> {
+            if (aBoolean) {
+                hideUIForAdmin();
+            } else {
+                showUIForUser();
+            }
+        });
+    }
+
+    private void showUIForUser() {
+        binding.txtSwitch.setText("Switch to Admin");
+        binding.radioGroup.setVisibility(View.VISIBLE);
+        binding.btnLogin.setText("Login");
+        binding.tvHintSignup.setVisibility(View.VISIBLE);
+        binding.tvSignup.setVisibility(View.VISIBLE);
+        binding.tvOr.setVisibility(View.VISIBLE);
+        binding.view.setVisibility(View.VISIBLE);
+        binding.view1.setVisibility(View.VISIBLE);
     }
 
     private void hideUIForAdmin() {
+        binding.txtSwitch.setText("Switch to User");
         binding.radioGroup.setVisibility(View.GONE);
         binding.btnLogin.setText("Login as Admin");
         binding.tvHintSignup.setVisibility(View.GONE);

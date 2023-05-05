@@ -14,4 +14,8 @@ public class VaxCare extends Application {
     public static String getAppType() {
         return appType;
     }
+
+    public static void setAppType(String appType) {
+        VaxCare.appType = appType;
+    }
 }

@@ -25,6 +25,7 @@ public class LoginViewModel extends AndroidViewModel {
     public String email, password,userType;
     MutableLiveData<String> validFields;
     MutableLiveData<ApiResponse> authResponse;
+    MutableLiveData<Boolean> switchStatus = new MutableLiveData<>();
 
     VaxPreference preference;
 
@@ -36,6 +37,13 @@ public class LoginViewModel extends AndroidViewModel {
         } else {
             userType = "user";
         }
+    }
+
+    public MutableLiveData<Boolean> getSwitchStatus() {
+        if (switchStatus == null) {
+            switchStatus = new MutableLiveData<>();
+        }
+        return switchStatus;
     }
 
 
@@ -102,5 +110,17 @@ public class LoginViewModel extends AndroidViewModel {
             return true;
         }
         return false;
+    }
+
+    public void onSwitchClick() {
+        if (VaxCare.getAppType().equals("admin")) {
+            VaxCare.setAppType("user");
+            userType = "user";
+            switchStatus.postValue(false);
+        } else {
+            VaxCare.setAppType("admin");
+            userType = "admin";
+            switchStatus.postValue(true);
+        }
     }
 }
